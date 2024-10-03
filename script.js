@@ -7,16 +7,61 @@ const loadCategories = () => {
 }
 
 // load videos function==================
-const loasVideos = () => {
+const loadVideos = () => {
   fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
   .then(res => res.json())
-  .then(data => console.log(data))
+  .then(data =>displayVideos(data.videos))
   .catch(err => console.log(err))
 }
 
 // display videos card--=================
-const 
+const displayVideos = (videos) => {
+  console.log(videos);
+  const videosContainer = document.getElementById('videos_container');
+  videos.forEach((item) => {
+    const card = document.createElement('div')
+    card.classList = "card card-compact";
+  card.innerHTML = `
  
+  <figure class="h-[200px] py-2">
+    <img
+    class="h-full w-full object-"
+      src=${item.thumbnail}
+      alt="Shoes" />
+  </figure>
+  <div class="flex gap-2">
+  <div class=''>
+<img class='w-10 h-10 rounded-full object-cover' src=${item.authors[0].profile_picture} alt="" />
+</div>
+<div>
+<h2 class='font-bold'>${item.title} </h2>
+<div>
+<div class='flex gap-2 px-0 items-center'>
+<p class='font-semibold text-gray-400'>${item.authors[0].profile_name}</p>
+
+${item.authors[0].verified ? '<img class="h-5 w-5" src="https://img.icons8.com/?size=48&id=D9RtvkuOe31p&format=png" /> ': ''}
+
+</div>
+  
+  
+  <p>${item.others.views} views</p>
+  
+
+</div>
+</div>
+ 
+    
+   
+  </div>
+
+  `
+  videosContainer.append(card);
+  })
+}
+ 
+
+
+
 
 const displayCategories = (categories) => {
   const categoriesContainer = document.getElementById('categories_container')
@@ -32,3 +77,4 @@ const displayCategories = (categories) => {
 }
 
 loadCategories();
+loadVideos();
